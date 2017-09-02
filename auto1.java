@@ -24,8 +24,6 @@ public abstract class auto1 extends LinearOpMode {
 
         waitForStart();
 
-        while(opModeIsActive()){
-            DcMotor.RunMode (int motor);
 
 
             telemetry.update();
@@ -33,4 +31,4 @@ public abstract class auto1 extends LinearOpMode {
             idle();
         }
     }
-}
+
