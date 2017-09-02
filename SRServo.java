@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.hardware.Servo;
+import org.firstinspires.ftc.teamcode.HardwareMap;
 
 /**
  * Created by khadija on 9/2/2017.
