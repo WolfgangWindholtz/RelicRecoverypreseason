@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+
 @Autonomous(group = "Servo",name = "Servo")
 public class RevServo extends LinearOpMode {
     Hardwaremap robot = new Hardwaremap();
@@ -18,7 +19,6 @@ public class RevServo extends LinearOpMode {
         waitForStart();
         while(opModeIsActive()){
             robot.servo1.setPosition(1);
-            robot.servo2.setPosition(1);
             idle();
         }
     }

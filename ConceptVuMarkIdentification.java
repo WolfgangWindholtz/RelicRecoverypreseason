@@ -33,6 +33,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.ConceptVuforiaNavigation;
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
@@ -69,7 +70,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
  */
 
 @Autonomous(name="Concept: VuMark Id", group ="Concept")
-@Disabled
 public class ConceptVuMarkIdentification extends LinearOpMode {
     public static final String TAG = "Vuforia VuMark Sample";
     Hardwaremap robot = new Hardwaremap();
@@ -156,6 +156,10 @@ public class ConceptVuMarkIdentification extends LinearOpMode {
                  * we illustrate it nevertheless, for completeness. */
                 OpenGLMatrix pose = ((VuforiaTrackableDefaultListener)relicTemplate.getListener()).getPose();
                 telemetry.addData("Pose", format(pose));
+                robot.motor1.setPower(.5);
+                robot.motor2.setPower(.5);
+                robot.motor3.setPower(.5);
+                robot.motor4.setPower(.5);
 
                 /* We further illustrate how to decompose the pose into useful rotational and
                  * translational components */
@@ -173,11 +177,6 @@ public class ConceptVuMarkIdentification extends LinearOpMode {
                     double rY = rot.secondAngle;
                     double rZ = rot.thirdAngle;
                 }
-               if (vuMark == RelicRecoveryVuMark.CENTER){
-               }
-               if(vuMark == RelicRecoveryVuMark.LEFT){
-                   
-               }
 
             }
             else {
