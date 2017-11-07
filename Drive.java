@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.Range;
 
@@ -7,7 +8,7 @@ import com.qualcomm.robotcore.util.Range;
  * Created by Robotics on 10/6/2017.
  */
 
-public class Drive {
+public abstract class Drive extends LinearOpMode {
     Hardwaremap robot = new Hardwaremap();
     public void driveFB(double power){
         robot.motorRF.setPower(power);

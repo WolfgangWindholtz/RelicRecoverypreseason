@@ -19,7 +19,6 @@ public class RevServo extends LinearOpMode {
         waitForStart();
         while(opModeIsActive()){
             robot.servo1.setPosition(1);
-            idle();
         }
     }
 }

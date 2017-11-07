@@ -17,22 +17,18 @@ public class Color extends LinearOpMode {
         robot.init(hardwareMap);
         waitForStart();
         while(opModeIsActive()){
-            red = robot.sensor1.red();
-            blue = robot.sensor1.blue();
+            red = robot.color.red();
+            blue = robot.color.blue();
             telemetry.addData("Redness", red);
             telemetry.addData("Blueness",blue);
             telemetry.update();
             if(red>50){
-                robot.servo1.setPosition(1);
-                sleep(1000);
                 robot.servo1.setPosition(-1);
-                stop();
+                sleep(1000);
             }
-            if(blue>50){
-                robot.servo1.setPosition(-1);
-                sleep(1000);
+            else{
                 robot.servo1.setPosition(1);
-                stop();
+                sleep(1000);
             }
         }
     }

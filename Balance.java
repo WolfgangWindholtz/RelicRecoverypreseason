@@ -21,12 +21,11 @@ import java.util.Locale;
 
 @Autonomous(name = "Balance", group = "Balance")
 ///@Disabled                            // Comment this out to add to the opmode list
-public class Balance extends LinearOpMode {
+public class Balance extends Drive {
         BNO055IMU imu;
         Orientation angles;
         Acceleration gravity;
         Hardwaremap robot = new Hardwaremap();
-        Drive bot = new Drive();
         double power;
         double x,y;
     @Override public void runOpMode() {
@@ -53,20 +52,20 @@ public class Balance extends LinearOpMode {
             if(Math.abs(Math.abs(x)-Math.abs(y))<10) {
                 while ((x > 10 && y > 10) || (x < -10 && y < -10)) {
                     power = angles.firstAngle / 50;
-                    bot.strafeRFLB(-power);
+                    strafeRFLB(-power);
                 }
                 while ((x < -10 && y > 10) || (x > 10 && y < -10)){
                     power = angles.firstAngle/50;
-                    bot.strafeLFRB(-power);
+                    strafeLFRB(-power);
                 }
             }
             while (Math.abs(angles.firstAngle)>10 && Math.abs(angles.secondAngle)<=10){
                 power = angles.firstAngle/50;
-                bot.driveFB(-power);
+                driveFB(-power);
             }
             while(Math.abs(angles.secondAngle)>10 && Math.abs(angles.firstAngle)<=10) {
                 power = angles.secondAngle/50;
-                bot.driveRL(-power);
+                driveRL(-power);
             }
         }
     }

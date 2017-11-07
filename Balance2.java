@@ -32,15 +32,21 @@ import java.util.Locale;
             // Loop and update the dashboard
             while (opModeIsActive()) {
                 telemetry.update();
-                x = robot.angles.firstAngle/5;
-                y = robot.angles.secondAngle/5;
-                while(Math.abs(x)>2 || Math.abs(y)>2){
-                    robot.motorLF.setPower(-y+x);
-                    robot.motorRF.setPower(y+x);
-                    robot.motorRB.setPower(y-x);
-                    robot.motorLB.setPower(-y-x);
+                x = robot.angles.secondAngle/20;
+                y = robot.angles.thirdAngle/20;
+                while(Math.abs(x)>10 || Math.abs(y)>10){
+                    x = robot.angles.secondAngle/10;
+                    y = robot.angles.thirdAngle/10;
+                    robot.motorRF.setPower(-y+x);
+                    robot.motorLF.setPower(y+x);
+                    robot.motorLB.setPower(y-x);
+                    robot.motorRB.setPower(-y-x);
+                    telemetry.update();
                 }
-            }
+                robot.motorRF.setPower(0);
+                robot.motorLF.setPower(0);
+                robot.motorLB.setPower(0);
+                robot.motorRB.setPower(0);            }
         }
 
         //----------------------------------------------------------------------------------------------
