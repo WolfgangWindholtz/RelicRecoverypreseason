@@ -18,7 +18,9 @@ public class Test2 extends Processum {
     public void runOpMode() throws InterruptedException {
         robot.init(hardwareMap);
         waitForStart();
-        while (opModeIsActive()) {
+        if(opModeIsActive()) {
+            verte(75);
+            iteAngle(100,-225);
 
         }
     }

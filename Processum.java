@@ -29,7 +29,7 @@ public abstract class Processum extends LinearOpMode {
     static final double TURN_SPEED = 0.4;
     static final double DRIVE_SPEED = 0.6;
     static final double HEADING_THRESHOLD = 2;
-    static final double OMNI_WHEEL_CIRCUMFERENCE = 2 * Math.PI;
+    static final double OMNI_WHEEL_CIRCUMFERENCE = 3 * Math.PI;
 
     static final double COUNTS_PER_MOTOR_REV = 1120;
     static final double DRIVE_GEAR_REDUCTION = 1.286;     // This is < 1.0 if geared UP
@@ -87,18 +87,18 @@ public abstract class Processum extends LinearOpMode {
         double y = Math.sin(angel);
         double distance = dist / (OMNI_WHEEL_CIRCUMFERENCE);
         double ticks = 1120 * distance;
-        int ticksRF = (int)Math.round(ticks*.7*(-y+x));
-        int ticksLF = (int)Math.round(ticks*.7*(y-x));
-        int ticksLB = (int)Math.round(ticks*.7*(y+x));
-        int ticksRB = (int)Math.round(ticks*.7*(y-x));
+        int ticksRF = (int)Math.round(ticks*.7*(y-x));
+        int ticksLF = (int)Math.round(ticks*.7*(-y-x));
+        int ticksLB = (int)Math.round(ticks*.7*(-y+x));
+        int ticksRB = (int)Math.round(ticks*.7*(y+x));
         robot.motorLF.setTargetPosition(ticksLF);
         robot.motorRF.setTargetPosition(ticksRF);
         robot.motorRB.setTargetPosition(ticksRB);
         robot.motorLB.setTargetPosition(ticksLB);
-        robot.motorRF.setPower(.7 * (-y + x));
-        robot.motorLF.setPower(.7 * (y + x));
-        robot.motorLB.setPower(.7 * (y + x));
-        robot.motorRB.setPower(.7 * (y - x));
+        robot.motorRF.setPower(.7 * (y - x));
+        robot.motorLF.setPower(.7 * (-y - x));
+        robot.motorLB.setPower(.7 * (-y + x));
+        robot.motorRB.setPower(.7 * (y + x));
         sleep(250);
     }
     public void cessa(){
@@ -107,17 +107,11 @@ public abstract class Processum extends LinearOpMode {
         robot.motorLB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.motorRB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
-    
+
     public void verte(double target) {
         Orientation ref = robot.imu.getAngularOrientation();
-
         double heading = ref.firstAngle;
-        double correction;
-        double error;
-
-        double angleWanted = target + heading;
-
-        ref = robot.imu.getAngularOrientation();
+        double angleWanted = target - heading;
         double speed = versa(ref.firstAngle, angleWanted);
         while(speed != 0 ){
             ref = robot.imu.getAngularOrientation();
@@ -125,13 +119,14 @@ public abstract class Processum extends LinearOpMode {
             accede(speed);
         }
         accede(0);
+        sleep(250);
     }
 
     double versa(double firstAngle, double angleWanted) {
         double error;
         double correction;
         double speed;
-        error = angleWanted - firstAngle;
+        error = angleWanted + firstAngle;
 
         correction = Range.clip( error * P_TURN_COEFF,-1,1);
 
@@ -140,8 +135,8 @@ public abstract class Processum extends LinearOpMode {
         }
         else{
             speed = TURN_SPEED * correction;
+            return speed;
         }
-        return speed;
     }
     private void accede(double speed) {
         double clip_speed = Range.clip(-speed, -1, 1);
@@ -150,76 +145,4 @@ public abstract class Processum extends LinearOpMode {
         robot.motorRB.setPower(clip_speed);
         robot.motorLB.setPower(clip_speed);
     }
-    public void nissan_shitbox(double speed,
-                             double inches,
-                             double timeoutS) {
-        int newLeftFrontTarget;
-        int newRightBackTarget;
-        int newRightFrontTarget;
-        int newLeftBackTarget;
-
-        // Ensure that the opmode is still active
-        if (opModeIsActive()) {
-
-            // Determine new target position, and pass to motor controller
-            newLeftFrontTarget = robot.motorLF.getCurrentPosition() + (int)(inches * COUNTS_PER_INCH);
-            newRightFrontTarget = robot.motorRF.getCurrentPosition() + (int)(inches * COUNTS_PER_INCH);
-            newRightBackTarget = robot.motorRB.getCurrentPosition() + (int)(inches * COUNTS_PER_INCH);
-            newLeftBackTarget = robot.motorLB.getCurrentPosition() + (int)(inches * COUNTS_PER_INCH);
-            robot.motorLF.setTargetPosition(newLeftFrontTarget);
-            robot.motorRF.setTargetPosition(newRightFrontTarget);
-            robot.motorRB.setTargetPosition(newRightBackTarget);
-            robot.motorLB.setTargetPosition(newLeftBackTarget);
-
-            // Turn On RUN_TO_POSITION
-            robot.motorLF.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            robot.motorRF.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            robot.motorLB.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            robot.motorRB.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-            // reset the timeout time and start motion.
-            runtime.reset();
-            robot.motorLF.setPower(Math.abs(speed));
-            robot.motorRF.setPower(Math.abs(speed));
-            robot.motorLB.setPower(Math.abs(speed));
-            robot.motorRB.setPower(Math.abs(speed));
-
-            // keep looping while we are still active, and there is time left, and both motors are running.
-            // Note: We use (isBusy() && isBusy()) in the loop test, which means that when EITHER motor hits
-            // its target position, the motion will stop.  This is "safer" in the event that the robot will
-            // always end the motion as soon as possible.
-            // However, if you require that BOTH motors have finished their moves before the robot continues
-            // onto the next step, use (isBusy() || isBusy()) in the loop test.
-            while (opModeIsActive() &&
-                    (runtime.seconds() < timeoutS) &&
-                    (robot.motorLB.isBusy() && robot.motorRB.isBusy()&&robot.motorRF.isBusy()&&robot.motorLF.isBusy())) {
-
-                // Display it for the driver.
-                telemetry.addData("Path1",  "Running to %7d :%7d", newLeftBackTarget,  newLeftFrontTarget,newRightBackTarget,newRightFrontTarget);
-                telemetry.addData("Path2",  "Running at %7d :%7d",
-                        robot.motorLB.getCurrentPosition(),
-                        robot.motorLF.getCurrentPosition(),
-                        robot.motorRB.getCurrentPosition(),
-                        robot.motorRF.getCurrentPosition());
-                telemetry.update();
-            }
-
-            // Stop all motion;
-            robot.motorLB.setPower(0);
-            robot.motorLF.setPower(0);
-            robot.motorRB.setPower(0);
-            robot.motorRF.setPower(0);
-
-
-            // Turn off RUN_TO_POSITION
-            robot.motorLF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            robot.motorRF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            robot.motorRB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            robot.motorLB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-            sleep(250);   // optional pause after each move
-        }
-    }
-
-
 }
