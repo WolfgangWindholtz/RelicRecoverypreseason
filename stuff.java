@@ -30,12 +30,20 @@ public class stuff extends LinearOpMode {
     BNO055IMU imu;
     Orientation angles;
     Acceleration gravity;
-/*    DcMotor motor1;
-    DcMotor motor2;
-    DcMotor motor3;
-    DcMotor motor4;
-   */
-    @Override public void runOpMode() {
+
+    DcMotor MotorLeft1 = null;
+    DcMotor MotorLeft2 = null;
+    DcMotor MotorRight1 = null;
+    DcMotor MotorRight2 = null;
+
+
+    @Override public void runOpMode() throws InterruptedException {
+
+        MotorLeft1 = hardwareMap.dcMotor.get("MotorLeft1");
+        MotorRight1 = hardwareMap.dcMotor.get("MotorRight1");
+        MotorLeft2 = hardwareMap.dcMotor.get("MotorLeft2");
+        MotorRight2 = hardwareMap.dcMotor.get("MotorRight2");
+
 
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
@@ -54,14 +62,33 @@ public class stuff extends LinearOpMode {
 
         imu.startAccelerationIntegration(new Position(), new Velocity(), 1000);
 
-        // Loop and update the dashboard
+        // Loop, update the telementry, and set the power of the motors
         while (opModeIsActive()) {
             telemetry.update();
+            MotorLeft1.setPower(-0.50);
+            MotorRight1.setPower(-0.50);
+            MotorLeft2.setPower(0.50);
+            MotorRight2.setPower(0.50);
+            sleep(2000);
+
+            MotorLeft1.setPower(.75);
+            MotorRight1.setPower(.75);
+            MotorLeft2.setPower(-0.50);
+            MotorRight2.setPower(-0.50);
+            sleep(2000);
+
+            MotorLeft1.setPower(0);
+            MotorRight1.setPower(0);
+            MotorLeft2.setPower(0);
+            MotorRight2.setPower(0);
+
+
         }
     }
 
 
-    void composeTelemetry() {
+    void composeTelemetry(){
+
 
 
         telemetry.addAction(new Runnable() { @Override public void run()
@@ -77,7 +104,7 @@ public class stuff extends LinearOpMode {
                         return imu.getSystemStatus().toShortString();
                     }
                 })
-                .addData("calib", new Func<String>() {
+                .addData("calibration status", new Func<String>() {
                     @Override public String value() {
                         return imu.getCalibrationStatus().toString();
                     }
@@ -101,7 +128,7 @@ public class stuff extends LinearOpMode {
                 });
 
         telemetry.addLine()
-                .addData("grvty", new Func<String>() {
+                .addData("gravity", new Func<String>() {
                     @Override public String value() {
                         return gravity.toString();
                     }
@@ -114,6 +141,20 @@ public class stuff extends LinearOpMode {
                                         + gravity.zAccel*gravity.zAccel));
                     }
                 });
+
+        telemetry.addLine()
+                .addData("LeftMotor1 Power = ", "%d", MotorLeft1.getPower());
+
+
+        telemetry.addLine()
+                .addData("LeftMotor2 Power = ","%d", MotorLeft2.getPower());
+
+        telemetry.addLine()
+                .addData("RightMotor1 Power = ","%d", MotorRight1.getPower());
+
+        telemetry.addLine()
+                .addData("RightMotor2 Power = ","%d", MotorRight2.getPower());
+
     }
 
 
@@ -123,6 +164,8 @@ public class stuff extends LinearOpMode {
 
     String formatDegrees(double degrees){
         return String.format(Locale.getDefault(), "%.1f", AngleUnit.DEGREES.normalize(degrees));
+
     }
+
 
 }
