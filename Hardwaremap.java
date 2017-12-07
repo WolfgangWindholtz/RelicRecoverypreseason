@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cColorSensor;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -41,7 +42,7 @@ public class Hardwaremap{
         motorRB = hwMap.dcMotor.get("motorRB");
         servo1 = hwMap.servo.get("servo1");
         servo2 = hwMap.servo.get("servo2");
-        color = hwMap.colorSensor.get("color");
+        color = hwMap.get(ModernRoboticsI2cColorSensor.class,"color");
         range = hwMap.get(ModernRoboticsI2cRangeSensor.class,"range");
         motorRF.setDirection(DcMotorSimple.Direction.FORWARD);
         motorLF.setDirection(DcMotorSimple.Direction.FORWARD);
