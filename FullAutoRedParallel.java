@@ -24,11 +24,9 @@ public class FullAutoRedParallel extends Processor {
         checkVu();
 
         //sets servo to grab the glyph touching the robot at the start of autonomous
-        bot.glyphServo1.setPosition(0.69);
-        bot.glyphServo4.setPosition(.69);
-        bot.glyphServo2.setPosition(0.35);
-        bot.glyphServo3.setPosition(0.35);
-        sleep(2000);
+        bot.glyphServo1.setPosition(0.53);
+        bot.glyphServo2.setPosition(0.5);
+        sleep(3000);
 
         runtime.reset();
         while (runtime.milliseconds() < 300) {
@@ -41,7 +39,7 @@ public class FullAutoRedParallel extends Processor {
         knockJewel(true);
 
         //moves the robot a distance of 30 inches at an angle of 0 off the horizontal with the side with the glyph servo being orientated at the angle of 90 off the horizontal
-        goAngle(30, 0);
+        goAngle(25, 0);
 
         sleep(500);
 
@@ -50,7 +48,7 @@ public class FullAutoRedParallel extends Processor {
         turn(177);
 
         //moves the robot a very small increment to line up with the cryptobox
-        goAngle(12, 0);
+        goAngle(10, 0);
 
         sleep(500);
 
@@ -59,7 +57,7 @@ public class FullAutoRedParallel extends Processor {
 
         //stops all motion
         stopBotMotors();
-        sleep(500);
+        sleep(1000);
 
         //releases the glyph and pushes the glyph into the cryptobox
         score();

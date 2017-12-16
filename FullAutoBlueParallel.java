@@ -26,14 +26,12 @@ public class FullAutoBlueParallel extends Processor{
         checkVu();
 
         //sets servo to grab the glyph touching the robot at the start of autonomous
-        bot.glyphServo1.setPosition(0.69);
-        bot.glyphServo4.setPosition(.69);
-        bot.glyphServo2.setPosition(0.35);
-        bot.glyphServo3.setPosition(.35);
-        sleep(2000);
+        bot.glyphServo1.setPosition(0.53);
+        bot.glyphServo2.setPosition(0.5);
+        sleep(3000);
 
         runtime.reset();
-        while(runtime.milliseconds()<750) {
+        while(runtime.milliseconds()<300) {
             //raises the Rev slides to pick the glyph off the ground to prevent dragging the glyph
             bot.slideMotor.setPower(-.8);
         }

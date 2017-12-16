@@ -4,6 +4,8 @@ import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cColorSensor;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsTouchSensor;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -48,6 +50,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
@@ -87,6 +90,8 @@ public class Map {
     ModernRoboticsI2cRangeSensor rangeSensor = null;
 
     ColorSensor colorSensor = null;
+    
+    TouchSensor touchSensor;
 
     int cameraMonitorViewId;
     VuforiaTrackables relicTrackables;
@@ -119,7 +124,7 @@ public class Map {
         motorRB = hwMap.dcMotor.get("motorRB");
         slideMotor = hwMap.dcMotor.get("slideMotor");
         //motorLB.setDirection(DcMotor.Direction.REVERSE);
-        //^^^^^^^^^^^^^^^^^^^^^^^^^R^RmotorRF.setDirection(DcMotor.Direction.REVERSE);
+        //motorRF.setDirection(DcMotor.Direction.REVERSE);
         glyphServo1 = hwMap.servo.get("glyphServo1");
         glyphServo2 = hwMap.servo.get("glyphServo2");
         glyphServo3 = hwMap.servo.get("glyphServo3");
@@ -138,6 +143,7 @@ public class Map {
 
         rangeSensor = hwMap.get(ModernRoboticsI2cRangeSensor.class, "rangeSensor");
         colorSensor = hwMap.get(ColorSensor.class, "colorSensor");
+        touchSensor = hwMap.touchSensor.get("touchSensor");
 
 
         cameraMonitorViewId = hwMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hwMap.appContext.getPackageName());
@@ -166,12 +172,6 @@ public class Map {
 
         slideMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        jewelServo.setPosition(.2);
-
-        glyphServo1.setPosition(0.4);
-        glyphServo4.setPosition(.4);
-        glyphServo2.setPosition(0.6);
-        glyphServo3.setPosition(.6);
         motorLB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorRB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorLF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -181,7 +181,6 @@ public class Map {
         motorRB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorLF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorRF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
 
     }
 }

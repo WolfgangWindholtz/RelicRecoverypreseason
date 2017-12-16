@@ -24,12 +24,11 @@ public class FullAutoRedPerp extends Processor{
         //stores the Pictogram image value in a instance variable
         checkVu();
 
-        //sets servo to grab the glyph touching the robot at the start of autonomous
-        bot.glyphServo1.setPosition(0.69);
-        bot.glyphServo4.setPosition(.69);
-        bot.glyphServo2.setPosition(0.35);
-        bot.glyphServo3.setPosition(0.35);
-        sleep(1000);
+        //sets servo to grab the glyph touching the robot at the start of autonomous\
+        bot.glyphServo1.setPosition(0.53);
+        bot.glyphServo2.setPosition(0.5);
+
+        sleep(3000);
 
         runtime.reset();
 
@@ -43,13 +42,15 @@ public class FullAutoRedPerp extends Processor{
         knockJewel(true);
 
         //moves the robot a distance of 18 inches at an angle of 0 off the horizontal with the side with the glyph servo being orientated at the angle of 90 off the horizontal
-        goAngle(18, 0 );
+        goAngle(21, 0 );
+        sleep(1000);
 
         //turns the robot 90 degrees clock wise
         turn(-90);
+        sleep(500);
 
         //moves the robot a very small increment to line up with the cryptobox
-        goAngle(5,180);
+        goAngle(.75,180);
 
         //travels in increments along the cryptobox to stop at the correct column indicated by the Pictogram image
         gotoColumnLeftEnc();
