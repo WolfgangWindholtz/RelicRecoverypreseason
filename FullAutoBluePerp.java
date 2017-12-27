@@ -45,13 +45,14 @@ public class FullAutoBluePerp extends Processor{
         //moves the robot a distance of 18 inches at an angle of 180 off the horizontal with the side with the glyph servo being orientated at the angle of 90 off the horizontal
 
         goAngle(21,180);
+        align(0);
 
         //turns the robot 90 degrees counter clock wise
         turn(90);
 
         //moves the robot a very small increment to line up with the cryptobox
         goAngle(.75,0);
-
+        align(90);
         //travels in increments along the cryptobox to stop at the correct column indicated by the Pictogram image
         gotoColumnRightEnc();
 
@@ -59,6 +60,7 @@ public class FullAutoBluePerp extends Processor{
         //stopBotMotors();
         sleep(1000);
         //releases the glyph and pushes the glyph into the cryptobox
+        align(90);
         score();
 
     }

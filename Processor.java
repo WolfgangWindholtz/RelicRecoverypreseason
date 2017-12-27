@@ -25,7 +25,7 @@ public abstract class Processor extends LinearOpMode {
     public final static int TICKSPERROTATION = 1120;
     static final double P_TURN_COEFF = .15;
     public final static int DIAMETEROFWHEEL = 4;
-    static final double TURN_SPEED = 0.2;
+    static final double TURN_SPEED = 0.3;
     static final double DRIVE_SPEED = 0.6;
     static final double HEADING_THRESHOLD = 2;
     static final double OMNI_WHEEL_CIRCUMFERENCE = 4 * Math.PI;
@@ -233,68 +233,6 @@ public abstract class Processor extends LinearOpMode {
 
     }
 
-
-
-
-    public void gotoColumnRight() {
-        enterEnc();
-        // the direction approaching the cryptobox changes depending on the side
-
-        // get close to the wall
-
-        while (bot.rangeSensor.getDistance(DistanceUnit.CM)>20) {
-
-
-            bot.motorLF.setPower(-.3);
-            bot.motorRF.setPower(.3);
-            bot.motorRB.setPower(.3);
-            bot.motorLB.setPower(-.3);
-
-
-            // clear the column so the same column is not counted three time
-        }
-
-
-        if (bot.columnToScore == RelicRecoveryVuMark.LEFT) {
-            goPulsesPrep(1);
-        }
-        if (bot.columnToScore == RelicRecoveryVuMark.CENTER) {
-            goPulsesPrep(2);
-        }
-        if (bot.columnToScore == RelicRecoveryVuMark.RIGHT) {
-            goPulsesPrep(3);
-        }
-
-    }
-    public void gotoColumnLeft() {
-        // the direction approaching the cryptobox changes depending on the side
-        enterEnc();
-
-        while (bot.rangeSensor.getDistance(DistanceUnit.CM)>30) {
-
-
-            bot.motorLF.setPower(-.3);
-            bot.motorRF.setPower(.3);
-            bot.motorRB.setPower(.3);
-            bot.motorLB.setPower(-.3);
-
-
-            // clear the column so the same column is not counted three time
-        }
-
-        if (bot.columnToScore == RelicRecoveryVuMark.RIGHT) {
-            goPulses(1);
-        }
-        if (bot.columnToScore == RelicRecoveryVuMark.CENTER) {
-            goPulses(2);
-        }
-        if (bot.columnToScore == RelicRecoveryVuMark.LEFT) {
-            goPulses(3);
-        }
-
-        stopBotMotors();
-    }
-
     public void gotoColumnRightEnc() {
         enterEnc();
 
@@ -328,141 +266,122 @@ public abstract class Processor extends LinearOpMode {
         stopBotMotors();
     }
 
-    public void curro(){
-        bot.motorLF.setPower(.3);
-        bot.motorRF.setPower(.3);
-        bot.motorRB.setPower(-.3);
-        bot.motorLB.setPower(-.3);
+    public double angularOffset(){
+        Orientation angle = bot.imu.getAngularOrientation();
+        return angle.firstAngle;
     }
-    public void adjust(){
-        sleep(1000);
-        goAnglePower(2.5,180,.3);
-        sleep(1000);
-        curro();
-    }
-
-    public void goPulses(int numOfCol) {
-        double dist =30;
-        bot.runtime.reset();
-        telemetry.addData("dist",bot.rangeSensor.getDistance(DistanceUnit.CM));
-        telemetry.update();
-        if(numOfCol==1){
-            while(bot.rangeSensor.getDistance(DistanceUnit.CM) > dist) {
-                curro();
-            }
-            stopBotMotors();
-        }
-        /*
-        if(numOfCol==2){
-            while (bot.rangeSensor.getDistance(DistanceUnit.CM) > dist) {
-                curro();
-            }
-            stopBotMotors();
-            adjust();
-            while(bot.rangeSensor.getDistance(DistanceUnit.CM) > dist) {
-                curro();
-            }
-            stopBotMotors();
-        }
-        if(numOfCol==3){
-            if (bot.rangeSensor.getDistance(DistanceUnit.CM) > dist) {
-                stopBotMotors();
-            }
-            adjust();
-            if (bot.rangeSensor.getDistance(DistanceUnit.CM) > dist) {
-                stopBotMotors();
-            }
-            adjust();
-            if (bot.rangeSensor.getDistance(DistanceUnit.CM) > dist) {
-                stopBotMotors();
-            }
-        }
-        */
-    }
-
-
-
-    public void goPulsesPrep(int numOfCol) {
-        int count = 0;
-        while(count < numOfCol){
-
-            bot.motorLF.setPower(-.2);
-            bot.motorRF.setPower(-.2);
-            bot.motorRB.setPower(.2);
-            bot.motorLB.setPower(.2);
-
-            if (bot.rangeSensor.getDistance(DistanceUnit.CM)<23) {
-                count++;
-                if(numOfCol > count) {
-                    runtime.reset();
-
-                    while (runtime.milliseconds() < 350) {
-                        bot.motorLF.setPower(-.2);
-                        bot.motorRF.setPower(-.2);
-                        bot.motorRB.setPower(.2);
-                        bot.motorLB.setPower(.2);
-                    }
-                    runtime.reset();
-                }
-                // clear the column so the same column is not counted three time
-            }
-            telemetry.addData("count",count );
-            telemetry.update();
-        }
-        stopBotMotors();
+    public void align(double offset){
+        double error = angularOffset();
+        double difference = offset-error;
+        turn(difference);
     }
 
     public void goColumnL(int count){
+        stopBotMotors();
+        bot.colorServo.setPosition(.5);
+        sleep(700);
         int c = 0;
-        while(count > c){
-            goAngle(4.6,180);
-            stopBotMotors();
-
-
-            telemetry.addData("count",count );
+        while(count>c){
+            bot.motorLF.setPower(.3);
+            bot.motorRF.setPower(.3);
+            bot.motorRB.setPower(-.3);
+            bot.motorLB.setPower(-.3);
+            if(bot.colorSensor2.getDistance(DistanceUnit.CM)>5) {
+                c++;
+                if(count>=c){
+                    while(bot.colorSensor2.getDistance(DistanceUnit.CM)>5){
+                        bot.motorLF.setPower(.3);
+                        bot.motorRF.setPower(.3);
+                        bot.motorRB.setPower(-.3);
+                        bot.motorLB.setPower(-.3);
+                    }
+                }
+            }
+            telemetry.addData("count", c);
             telemetry.update();
-            c++;
         }
+        stopBotMotors();
+        sleep(1000);
+        goAnglePower(2.85,0,.2);
         stopBotMotors();
     }
 
 
     public void goColumnR(int count){
+        stopBotMotors();
+        bot.colorServo.setPosition(.5 );
+        sleep(700);
         int c = 0;
-        while(count > c){
-            goAngle(4.6,0);
-            stopBotMotors();
-
-
-            telemetry.addData("count",count );
+        count+=1;
+        while(count>c){
+            bot.motorLF.setPower(-.3);
+            bot.motorRF.setPower(-.3);
+            bot.motorRB.setPower(.3);
+            bot.motorLB.setPower(.3);
+            if(bot.colorSensor2.getDistance(DistanceUnit.CM)>5) {
+                c++;
+                if(count>=c){
+                    while(bot.colorSensor2.getDistance(DistanceUnit.CM)>5){
+                        bot.motorLF.setPower(-.3);
+                        bot.motorRF.setPower(-.3);
+                        bot.motorRB.setPower(.3);
+                        bot.motorLB.setPower(.3);
+                    }
+                }
+            }
+            telemetry.addData("count", c);
             telemetry.update();
-            c++;
         }
+        goAnglePower(2.85,180,.2);
         stopBotMotors();
     }
 
     public void score() {
-
+        bot.colorServo.setPosition(0);
+        sleep(1000);
         runtime.reset();
-        while(runtime.milliseconds()<250) {
+        while(runtime.milliseconds()<600) {
             bot.slideMotor.setPower(.8);
         }
         bot.slideMotor.setPower(0);
 
         stopBotMotors();
-        bot.glyphServo4.setPosition(0.5);
-        bot.glyphServo3.setPosition(.35);
-        bot.glyphServo1.setPosition(0.69);
-        bot.glyphServo2.setPosition(0.35);
+        sleep(1000);
+        bot.glyphServo4.setPosition(.1);
+        bot.glyphServo3.setPosition(.95);
+        bot.glyphServo2.setPosition(.85);
+        bot.glyphServo1.setPosition(.1);
         sleep(1000);
 
-        goAnglePower(7,90,.3);
-        sleep(1000);
+        goAnglePower(8,90,.3);
+        sleep(750);
         //turn(30);
 
-        goAnglePower(7,-90,.5);
-        sleep(1000);
+        goAnglePower(5,-90,.3);
+        sleep(700);
+        goAnglePower(8,90,.3);
+        stopBotMotors();
+    }
 
+    public void adjust(double dist){
+        double initial = bot.rangeSensor.getDistance(DistanceUnit.CM);
+        if(initial>dist) {
+            while (bot.rangeSensor.getDistance(DistanceUnit.CM) > dist) {
+                bot.motorRF.setPower(.2);
+                bot.motorLF.setPower(-.2);
+                bot.motorLB.setPower(-.2);
+                bot.motorRB.setPower(.2);
+            }
+        }
+        if(initial<dist) {
+            while (bot.rangeSensor.getDistance(DistanceUnit.CM) < dist) {
+                bot.motorRF.setPower(-.2);
+                bot.motorLF.setPower(.2);
+                bot.motorLB.setPower(.2);
+                bot.motorRB.setPower(-.2);
+            }
+        }
+        stopBotMotors();
     }
 
 
@@ -504,7 +423,6 @@ public abstract class Processor extends LinearOpMode {
                     bot.motorRF.getTargetPosition());
             telemetry.update();
         }
-
         stopBotMotors();
 
         sleep(250);
@@ -519,10 +437,10 @@ public abstract class Processor extends LinearOpMode {
         bot.motorRB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
     public void enterEnc(){
-        bot.motorRF.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        bot.motorLF.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        bot.motorLB.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        bot.motorRB.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        bot.motorRF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        bot.motorLF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        bot.motorLB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        bot.motorRB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
     public void enterPosenc(){
         bot.motorLF.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -575,7 +493,6 @@ public abstract class Processor extends LinearOpMode {
                     bot.motorRF.getTargetPosition());
             telemetry.update();
         }
-
         stopBotMotors();
 
         sleep(250);

@@ -42,6 +42,7 @@ public class FullAutoBlueParallel extends Processor{
 
         //moves the robot a distance of 18 inches at an angle of 180 off the horizontal with the side with the glyph servo being orientated at the angle of 90 off the horizontal
         goAngle(30, 180);
+        align(0);
 
         sleep(1000);
 
@@ -50,6 +51,7 @@ public class FullAutoBlueParallel extends Processor{
 
         //moves the robot a very small increment to line up with the cryptobox
         goAngle(13.5, 180);
+        align(180);
 
         sleep(1000);
 
@@ -62,6 +64,7 @@ public class FullAutoBlueParallel extends Processor{
         sleep(1000);
 
         //releases the glyph and pushes the glyph into the cryptobox
+        align(180);
         score();
     }
 }

@@ -151,7 +151,7 @@ public class telemap {
 
 
         slideMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        jewelServo.setPosition(.2);
+        jewelServo.setPosition(.15);
         //glyphServo1.setPosition(0.4);
         //glyphServo2.setPosition(0.6);
 

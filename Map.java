@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
@@ -85,13 +86,14 @@ public class Map {
     Servo glyphServo3;
     Servo glyphServo4;
     Servo jewelServo;
+    Servo colorServo;
 
-
-    ModernRoboticsI2cRangeSensor rangeSensor = null;
 
     ColorSensor colorSensor = null;
-    
-    TouchSensor touchSensor;
+
+    DistanceSensor colorSensor2 = null;
+
+    ModernRoboticsI2cRangeSensor rangeSensor = null;
 
     int cameraMonitorViewId;
     VuforiaTrackables relicTrackables;
@@ -112,7 +114,6 @@ public class Map {
 
     ElapsedTime runtime = new ElapsedTime();
 
-
     public void init(HardwareMap ahwMap) {
 
         // save reference to HW Map
@@ -130,6 +131,7 @@ public class Map {
         glyphServo3 = hwMap.servo.get("glyphServo3");
         glyphServo4 = hwMap.servo.get("glyphServo4");
         jewelServo = hwMap.servo.get("jewelServo");
+        colorServo = hwMap.servo.get("colorServo");
 
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
@@ -141,9 +143,9 @@ public class Map {
 
         imu.initialize(parameters);
 
-        rangeSensor = hwMap.get(ModernRoboticsI2cRangeSensor.class, "rangeSensor");
         colorSensor = hwMap.get(ColorSensor.class, "colorSensor");
-        touchSensor = hwMap.touchSensor.get("touchSensor");
+        colorSensor2 = hwMap.get(DistanceSensor.class,"colorSensor2");
+        rangeSensor = hwMap.get(ModernRoboticsI2cRangeSensor.class,"rangeSensor");
 
 
         cameraMonitorViewId = hwMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hwMap.appContext.getPackageName());
@@ -181,6 +183,5 @@ public class Map {
         motorRB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorLF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorRF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
     }
 }

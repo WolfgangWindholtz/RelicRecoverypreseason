@@ -151,10 +151,10 @@ public abstract class protoProcessor extends LinearOpMode {
 
     private void accelerate(double speed) {
         double clip_speed = Range.clip(speed, -1, 1);
-        bot.motorLF.setPower(-clip_speed);
+        bot.motorLF.setPower(clip_speed);
         bot.motorRF.setPower(clip_speed);
         bot.motorRB.setPower(clip_speed);
-        bot.motorLB.setPower(-clip_speed);
+        bot.motorLB.setPower(clip_speed);
     }
     public void knockJewel(boolean isTeamRed){
         bot.jewelServo.setPosition(.9);
@@ -287,17 +287,17 @@ public abstract class protoProcessor extends LinearOpMode {
         double distance = dist / (OMNI_WHEEL_CIRCUMFERENCE);
         double ticks = 1120 * distance;
         int ticksRF = (int)Math.round(ticks*Math.signum(y-x));
-        int ticksLF = (int)Math.round(ticks*Math.signum(y+x));
-        int ticksLB = (int)Math.round(ticks*Math.signum(y-x));
+        int ticksLF = (int)Math.round(ticks*Math.signum(-y-x));
+        int ticksLB = (int)Math.round(ticks*Math.signum(-y+x));
         int ticksRB = (int)Math.round(ticks*Math.signum(y+x));
         bot.motorLF.setTargetPosition(ticksLF);
         bot.motorRF.setTargetPosition(ticksRF);
         bot.motorRB.setTargetPosition(ticksRB);
         bot.motorLB.setTargetPosition(ticksLB);
-        bot.motorLF.setPower(.7*(y+x));
+        bot.motorLF.setPower(.7*(-y-x));
         bot.motorRF.setPower(.7*(y-x));
         bot.motorRB.setPower(.7*(y+x));
-        bot.motorLB.setPower(.7*(y-x));
+        bot.motorLB.setPower(.7*(-y+x));
         while (
                 (bot.motorLB.isBusy() && bot.motorRB.isBusy()&&bot.motorRF.isBusy()&&bot.motorLF.isBusy())) {
 
@@ -358,17 +358,17 @@ public abstract class protoProcessor extends LinearOpMode {
         double distance = dist / (OMNI_WHEEL_CIRCUMFERENCE);
         double ticks = 1120 * distance;
         int ticksRF = (int)Math.round(ticks*Math.signum(y-x));
-        int ticksLF = (int)Math.round(ticks*Math.signum(y+x));
-        int ticksLB = (int)Math.round(ticks*Math.signum(y-x));
+        int ticksLF = (int)Math.round(ticks*Math.signum(-y-x));
+        int ticksLB = (int)Math.round(ticks*Math.signum(-y+x));
         int ticksRB = (int)Math.round(ticks*Math.signum(y+x));
         bot.motorLF.setTargetPosition(ticksLF);
         bot.motorRF.setTargetPosition(ticksRF);
         bot.motorRB.setTargetPosition(ticksRB);
         bot.motorLB.setTargetPosition(ticksLB);
-        bot.motorLF.setPower(power*(y+x));
+        bot.motorLF.setPower(power*(-y-x));
         bot.motorRF.setPower(power*(y-x));
         bot.motorRB.setPower(power*(y+x));
-        bot.motorLB.setPower(power*(y-x));
+        bot.motorLB.setPower(power*(-y+x));
         while (
                 (bot.motorLB.isBusy() && bot.motorRB.isBusy()&&bot.motorRF.isBusy()&&bot.motorLF.isBusy())) {
 

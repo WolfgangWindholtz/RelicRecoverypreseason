@@ -28,34 +28,34 @@ public class protoTeleOp extends OpMode{
         ypow = gamepad1.left_stick_y;
         xpow = gamepad1.left_stick_x;
 
-        bot.motorLF.setPower(.7*(ypow+xpow+toggle(toggle,zpow)));
+        bot.motorLF.setPower(.7*(-ypow-xpow-toggle(toggle,zpow)));
         bot.motorRF.setPower(.7*(ypow-xpow-toggle(toggle,zpow)));
         bot.motorRB.setPower(.7*(ypow+xpow-toggle(toggle,zpow)));
-        bot.motorLB.setPower(.7*(ypow-xpow+toggle(toggle,zpow)));
+        bot.motorLB.setPower(.7*(-ypow+xpow-toggle(toggle,zpow)));
 
         if(gamepad1.dpad_left){
-            bot.motorLF.setPower(-.7);
+            bot.motorLF.setPower(.7);
             bot.motorRF.setPower(.7);
             bot.motorRB.setPower(-.7);
-            bot.motorLB.setPower(.7);
+            bot.motorLB.setPower(-.7);
         }
         if(gamepad1.dpad_right){
-            bot.motorLF.setPower(.7);
+            bot.motorLF.setPower(-.7);
             bot.motorRF.setPower(-.7);
-            bot.motorRB.setPower(.7);
-            bot.motorLB.setPower(-.7);
-        }
-        if(gamepad1.dpad_up){
-            bot.motorLF.setPower(.7);
-            bot.motorRF.setPower(.7);
             bot.motorRB.setPower(.7);
             bot.motorLB.setPower(.7);
         }
-        if(gamepad1.dpad_down){
+        if(gamepad1.dpad_up){
             bot.motorLF.setPower(-.7);
+            bot.motorRF.setPower(.7);
+            bot.motorRB.setPower(.7);
+            bot.motorLB.setPower(-.7);
+        }
+        if(gamepad1.dpad_down){
+            bot.motorLF.setPower(.7);
             bot.motorRF.setPower(-.7);
             bot.motorRB.setPower(-.7);
-            bot.motorLB.setPower(-.7);
+            bot.motorLB.setPower(.7);
         }
         else{
             bot.motorLF.setPower(0);
