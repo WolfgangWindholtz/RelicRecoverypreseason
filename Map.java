@@ -178,6 +178,8 @@ public class Map {
 
         slideMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+        jewelServo.setPosition(.15);
+
         motorLB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorRB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorLF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);

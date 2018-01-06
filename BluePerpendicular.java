@@ -33,9 +33,9 @@ public class BluePerpendicular extends Processor{
         sleep(500);
         align(90);
         raiseColorServo();
-        drivingRangeForwardBlue();
-        drivingRangeBackBlue();
-
+        adjust(12);
+        adjust(12);
+        adjust(12);
 
         goAngle(2,0);
         gotoColumnRight();
@@ -44,10 +44,11 @@ public class BluePerpendicular extends Processor{
 
 
         bot.colorServo.setPosition(0);
+        goAngle(0.25,180);
         sleep(500);
         align(90);
         //releases the glyph and pushes the glyph into the cryptobox
-        score(90);
+        score1(90);
         stopBotMotors();
     }
 }

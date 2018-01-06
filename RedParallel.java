@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 /**
  * Created by Sushr on 12/15/2017.
  */
-@Autonomous(name = "RedParallel", group = "fjfrjkdk")
+@Autonomous(name = "redParallel", group = "fjfrjkdk")
 public class RedParallel extends Processor{
 
     int count = 0;
@@ -32,20 +32,28 @@ public class RedParallel extends Processor{
         align(180);
         sleep(500);
         raiseColorServo();
-        drivingRangeForwardRed();
-        drivingRangeBackRed();
-        drivingRangeForwardRed();
+        align(180);
+        //adjust(33.75);
+        //adjust(33.75);
+        //adjust(33.75);
+        adjust(10.5);
+        adjust(10.5);
+        adjust(10.5);
 
-
+        align(180);
+        align(180);
+        align(180);
+        sleep(500);
         gotoColumnLeft();
 
 
 
         bot.colorServo.setPosition(0);
+
         sleep(500);
         align(180);
         //driveToDistance();
-        score(180);
+        score();
         stopBotMotors();
     }
 }

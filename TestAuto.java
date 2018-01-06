@@ -17,6 +17,8 @@ public class TestAuto extends Processor {
         bot.init(hardwareMap);
         //analyzes the Pictogram image
         waitForStart();
-        goAngleColumns(50,180,.2,3);
+        adjust(14.3);
+        adjust(14.3);
+        adjust(14.3);
     }
 }

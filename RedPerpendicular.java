@@ -31,18 +31,22 @@ public class RedPerpendicular extends Processor {
         turn(-90);
         align(-90);
         raiseColorServo();
-        drivingRangeForwardRed();
-        drivingRangeBackRed();
-        drivingRangeForwardRed();
+        adjust(10.5);
+        adjust(10.5);
+        adjust(10.5);
+
+        align(-90);
         gotoColumnLeft();
 
         stopBotMotors();
 
         bot.colorServo.setPosition(0);
+
+
         sleep(500);
         align(-90);
         //releases the glyph and pushes the glyph into the cryptobox
-        score(-90);
+        score();
         stopBotMotors();
     }
 }

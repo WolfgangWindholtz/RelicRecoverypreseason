@@ -1,21 +1,5 @@
 package org.firstinspires.ftc.teamcode;
 
-import android.graphics.Path;
-
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
-
-import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
-import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
-import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
-
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -72,16 +56,16 @@ public class teleop extends OpMode{
         bot.motorLB.setPower(.8*(aPair-toggle(toggle,zpow)));
 
         //assings the joystick value to another variable
-        double slidePower = gamepad2.left_stick_y;
+        double slidePower = -gamepad2.left_stick_y;
 
-        if(slidePower<0)
+        if(slidePower>0)
         {
             //scales the slidepower to move at a quarter speed
             slidePower /= 4;
         }
         bot.slideMotor.setPower(slidePower);
 
-        if(gamepad1.a){
+        if(gamepad1.right_bumper){
             if(!toggle){
                 toggle = true;
             }
@@ -113,15 +97,15 @@ public class teleop extends OpMode{
 
         if(gamepad2.b)  //opens the right servo
         {
-            bot.glyphServo1.setPosition(.53);
+            bot.glyphServo1.setPosition(.57);
             bot.glyphServo2.setPosition(.42);
-            releaseGlyphTop();
+            realeaseGlyphTop();
         }
         if(gamepad2.x){
             resetGlpyhpos();
         }
         if(gamepad2.a){
-            releaseGlyphTop();
+            realeaseGlyphTop();
         }
 
 
@@ -139,6 +123,8 @@ public class teleop extends OpMode{
         if(gamepad2.dpad_down){
             wristDown(); // bring wrist down for relic
         }
+
+
     }
 
     public double toggle(boolean toggle, double power){
@@ -155,7 +141,9 @@ public class teleop extends OpMode{
         bot.relicFingers.setPosition(0);
     }
 
-    public void fingersClose(){bot.relicFingers.setPosition(1);}
+    public void fingersClose(){
+        bot.relicFingers.setPosition(1);
+    }
 
     public void wristUp() {
         bot.relicWrist.setPosition(0);
@@ -164,19 +152,18 @@ public class teleop extends OpMode{
     public void wristDown() {
         bot.relicWrist.setPosition(1);
     }
-
     public void gripGlyphBot() {
-        bot.glyphServo1.setPosition(0.69);
-        bot.glyphServo2.setPosition(0.27);
+        bot.glyphServo1.setPosition(0.68);
+        bot.glyphServo2.setPosition(0.31);
     }
     public void gripGlyphTop()
     {
-        bot.glyphServo3.setPosition(.08);
-        bot.glyphServo4.setPosition(1);
+        bot.glyphServo3.setPosition(0.17);
+        bot.glyphServo4.setPosition(.62);
     }
 
     public void openRightBot() {
-        bot.glyphServo1.setPosition(0.4);
+        bot.glyphServo1.setPosition(0.44);
     }
 
     public void openLeftBot() {
@@ -184,18 +171,23 @@ public class teleop extends OpMode{
 
     }
     public void openRightTop() {
-        bot.glyphServo3.setPosition(.35);
+        bot.glyphServo3.setPosition(.32);
     }
 
     public void openLeftTop() {
-        bot.glyphServo4.setPosition(0.4);
+        bot.glyphServo4.setPosition(0.46);
 
     }
-    public void releaseGlyphBot() {
+    public void closeJewel()
+    {
+        bot.jewelServo.setPosition(0.2);
+    }
+
+    public void realeaseGlyphBot() {
         openLeftBot();
         openRightBot();
     }
-    public void releaseGlyphTop()
+    public void realeaseGlyphTop()
     {
         openLeftTop();
         openRightTop();
@@ -209,7 +201,7 @@ public class teleop extends OpMode{
     }
 
     public void resetGlpyhpos(){
-        releaseGlyphBot();
+        realeaseGlyphBot();
         gripGlyphTop();
     }
 

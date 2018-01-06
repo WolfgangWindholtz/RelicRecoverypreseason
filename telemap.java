@@ -141,7 +141,7 @@ public class telemap {
         motorRB.setDirection(DcMotor.Direction.FORWARD);
         motorRF.setDirection(DcMotor.Direction.FORWARD);
         motorLB.setDirection(DcMotor.Direction.FORWARD);
-        slideMotor.setDirection(DcMotor.Direction.FORWARD);
+        slideMotor.setDirection(DcMotor.Direction.REVERSE);
 
         motorLB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motorLF.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);

@@ -26,17 +26,19 @@ public class BlueParallel extends Processor{
         //knocks the correct jewel off according to our alliance color
         knockJewel(false);
 
-        goAngle(20,160);
+        goAnglePower(24,160,.4);
         sleep(500);
         align(0);
         sleep(500);
         turn(180);
         align(177);
         sleep(750);
-        goAngle(1,180);
+        goAnglePower(1.8,180,.3);
         raiseColorServo();
-        drivingRangeForwardBlue();
-        drivingRangeBackBlue();
+        adjust(14.3);
+        sleep(500);
+        adjust(14.3);
+        adjust(14.3);
 
 
         gotoColumnRight();
@@ -44,9 +46,12 @@ public class BlueParallel extends Processor{
         stopBotMotors();
 
         bot.colorServo.setPosition(0);
+
         sleep(500);
         align(180);
+        align(180);
+        align(180);
         //driveToDistance();
-        score(180);
+        score1(180);
         stopBotMotors();    }
 }
