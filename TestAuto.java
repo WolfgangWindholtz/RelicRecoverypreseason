@@ -15,15 +15,8 @@ public class TestAuto extends Processor {
     public void runOpMode() throws InterruptedException {
         //initializes all hardware on robot
         bot.init(hardwareMap);
-        double count = 0;
         //analyzes the Pictogram image
         waitForStart();
-        adjust(33.75);
-        adjust(33.75);
-        adjust(33.75);
-        sleep(500);
-        align(0);
-        sleep(1000);
-        goColumnL(2);
+        goAngleColumns(50,180,.2,3);
     }
 }

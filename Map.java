@@ -9,6 +9,7 @@ import com.qualcomm.hardware.modernrobotics.ModernRoboticsTouchSensor;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -52,6 +53,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
+import com.qualcomm.robotcore.hardware.UltrasonicSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
@@ -93,6 +95,7 @@ public class Map {
 
     DistanceSensor colorSensor2 = null;
 
+    AnalogInput ultrasonicLeft = null;
     ModernRoboticsI2cRangeSensor rangeSensor = null;
 
     int cameraMonitorViewId;
@@ -145,8 +148,9 @@ public class Map {
 
         colorSensor = hwMap.get(ColorSensor.class, "colorSensor");
         colorSensor2 = hwMap.get(DistanceSensor.class,"colorSensor2");
-        rangeSensor = hwMap.get(ModernRoboticsI2cRangeSensor.class,"rangeSensor");
 
+        ultrasonicLeft = hwMap.get(AnalogInput.class,"ultrasonicLeft");
+        rangeSensor = hwMap.get(ModernRoboticsI2cRangeSensor.class,"rangeSensor");
 
         cameraMonitorViewId = hwMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hwMap.appContext.getPackageName());
         VuforiaLocalizer.Parameters param = new VuforiaLocalizer.Parameters(cameraMonitorViewId);

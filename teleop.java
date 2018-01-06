@@ -139,8 +139,6 @@ public class teleop extends OpMode{
         if(gamepad2.dpad_down){
             wristDown(); // bring wrist down for relic
         }
-
-
     }
 
     public double toggle(boolean toggle, double power){
@@ -154,12 +152,10 @@ public class teleop extends OpMode{
     }
 
     public void fingersOpen(){
-        bot.relicFingers.setPosition(1);
-    }
-
-    public void fingersClose(){
         bot.relicFingers.setPosition(0);
     }
+
+    public void fingersClose(){bot.relicFingers.setPosition(1);}
 
     public void wristUp() {
         bot.relicWrist.setPosition(0);
@@ -188,7 +184,7 @@ public class teleop extends OpMode{
 
     }
     public void openRightTop() {
-        bot.glyphServo3.setPosition(.2);
+        bot.glyphServo3.setPosition(.35);
     }
 
     public void openLeftTop() {
