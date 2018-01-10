@@ -23,29 +23,28 @@ public class BluePerpendicular extends Processor{
         //knocks the correct jewel off according to our alliance color
         knockJewel(false);
 
-        goAngle(20,180);
-
+        goAnglePower(20,180,.4);
+        sleep(500);
         align(0);
-
+        sleep(500);
         turn(90);
-        sleep(500);
         align(90);
-        sleep(500);
-        align(90);
+        goAnglePower(1.2,0,.3);
         raiseColorServo();
-        adjust(12);
-        adjust(12);
-        adjust(12);
-
-        goAngle(2,0);
+        adjust(.048);
+        sleep(200);
+        adjust(.048);
+        adjust(.048);
+        align(90);
         gotoColumnRight();
 
         stopBotMotors();
 
 
         bot.colorServo.setPosition(0);
-        goAngle(0.25,180);
         sleep(500);
+        align(90);
+        align(90);
         align(90);
         //releases the glyph and pushes the glyph into the cryptobox
         score1(90);

@@ -27,18 +27,16 @@ public class BlueParallel extends Processor{
         knockJewel(false);
 
         goAnglePower(24,160,.4);
-        sleep(500);
         align(0);
-        sleep(500);
         turn(180);
-        align(177);
-        sleep(750);
-        goAnglePower(1.8,180,.3);
+        align(180);
+        goAnglePower(1.6,180,.3);
         raiseColorServo();
-        adjust(14.3);
-        sleep(500);
-        adjust(14.3);
-        adjust(14.3);
+        adjust(.048);
+        sleep(200);
+        adjust(.048);
+        adjust(.048);
+        align(180);
 
 
         gotoColumnRight();
@@ -49,9 +47,8 @@ public class BlueParallel extends Processor{
 
         sleep(500);
         align(180);
-        align(180);
-        align(180);
         //driveToDistance();
         score1(180);
-        stopBotMotors();    }
+        stopBotMotors();
+    }
 }

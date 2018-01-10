@@ -46,7 +46,7 @@ public class RedPerpendicular extends Processor {
         sleep(500);
         align(-90);
         //releases the glyph and pushes the glyph into the cryptobox
-        score();
+        score1(180);
         stopBotMotors();
     }
 }

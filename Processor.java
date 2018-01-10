@@ -24,9 +24,9 @@ public abstract class Processor extends LinearOpMode {
     ElapsedTime runtime = new ElapsedTime();
     public final static double DEFAULT_POWER = .7;
     public final static int TICKSPERROTATION = 1120;
-    static final double P_TURN_COEFF = .15;
+    static final double P_TURN_COEFF = .07;
     public final static int DIAMETEROFWHEEL = 4;
-    static final double TURN_SPEED = 0.2;
+    static final double TURN_SPEED = 0.3;
     static final double DRIVE_SPEED = 0.6;
     static final double HEADING_THRESHOLD = 2;
     static final double OMNI_WHEEL_CIRCUMFERENCE = 4 * Math.PI;
@@ -241,18 +241,18 @@ public abstract class Processor extends LinearOpMode {
         return speed;
     }
 
-    public void adjust(double dist){
-        double initial = getDistanceLeft();
-        if(initial>dist) {
-            while (getDistanceLeft() > dist) {
+    public void adjust(double volts){
+        double initial = bot.ultrasonicLeft.getVoltage();
+        if(initial>volts) {
+            while (bot.ultrasonicLeft.getVoltage() > volts) {
                 bot.motorRF.setPower(.1);
                 bot.motorLF.setPower(-.1);
                 bot.motorLB.setPower(-.1);
                 bot.motorRB.setPower(.1);
             }
         }
-        if(initial<dist) {
-            while (getDistanceLeft() < dist) {
+        if(initial<volts) {
+            while (bot.ultrasonicLeft.getVoltage() < volts) {
                 bot.motorRF.setPower(-.1);
                 bot.motorLF.setPower(.1);
                 bot.motorLB.setPower(.1);
@@ -276,7 +276,7 @@ public abstract class Processor extends LinearOpMode {
         enterEnc();
 
         goAngleColumns(20,0,0.2,getColumnRight());
-        goAngle(1.55,0);
+        goAngle(1.2,0);
 
         stopBotMotors();
     }
@@ -445,6 +445,7 @@ public abstract class Processor extends LinearOpMode {
     {
         telemetry.addData("UltrasonicDistanceLeft(in)", getDistanceLeft());
         telemetry.addData("Voltage Left ", getVoltagezLeft());
+        telemetry.addData("gyroscope",firstAngle());
         telemetry.update();
     }
     public double getVoltagezLeft()
@@ -538,54 +539,22 @@ public abstract class Processor extends LinearOpMode {
     }
 
 
-    public void score() {
-        runtime.reset();
-        while (runtime.milliseconds() < 250) {
-            bot.slideMotor.setPower(-.8);
-        }
-        bot.slideMotor.setPower(0);
-
-        sleep(500);
-
-        bot.glyphServo1.setPosition(0.4);
-        bot.glyphServo2.setPosition(0.6);
-        stopBotMotors();
-
-
-        goAnglePower(4, 90, .3);
-        sleep(500);
-        //turn(30);
-
-
-
-
-
-        goAnglePower(7, -90, .6);
-        sleep(1000);
-
-        bot.glyphServo4.setPosition(.45);
-        bot.glyphServo3.setPosition(.35);
-        runtime.reset();
-        while (runtime.milliseconds() < 350) {
-            bot.slideMotor.setPower(-.8);
-        }
-        bot.slideMotor.setPower(0);
-
-
-
-    }
 
     public void score1(int x) {
+        bot.glyphServo1.setPosition(0.4);
+        bot.glyphServo2.setPosition(0.6);
+        sleep(500);
+
         runtime.reset();
-        while (runtime.milliseconds() < 250) {
+        while (runtime.milliseconds() <700) {
             bot.slideMotor.setPower(-.8);
         }
         bot.slideMotor.setPower(0);
 
-        sleep(500);
+
         align(x);
-        bot.glyphServo1.setPosition(0.4);
-        bot.glyphServo2.setPosition(0.6);
+        bot.glyphServo3.setPosition(.32);
+        bot.glyphServo4.setPosition(0.46);
         stopBotMotors();
 
 
@@ -594,32 +563,20 @@ public abstract class Processor extends LinearOpMode {
         //turn(30);
 
         goAnglePower(9, -90, .6);
-        sleep(1000);
-
-        bot.glyphServo4.setPosition(.45);
-        bot.glyphServo3.setPosition(.35);
-        runtime.reset();
-        while (runtime.milliseconds() < 350) {
-            bot.slideMotor.setPower(-.8);
-        }
-        bot.slideMotor.setPower(0);
     }
 
     public void grabGlyph() {
-        bot.glyphServo1.setPosition(0.69);
-        bot.glyphServo2.setPosition(0.3);
         bot.glyphServo3.setPosition(.12);
         bot.glyphServo4.setPosition(1);
         sleep(1200);
-
-
         runtime.reset();
-
         //raises the Rev slides to pick the glyph off the ground to prevent dragging the glyph
         while(runtime.milliseconds()<700) {
             bot.slideMotor.setPower(.8);
         }
         bot.slideMotor.setPower(0);
+        bot.glyphServo1.setPosition(0.69);
+        bot.glyphServo2.setPosition(0.3);
         sleep(700);
     }
 
@@ -721,10 +678,10 @@ public abstract class Processor extends LinearOpMode {
         bot.motorRB.setPower(initial * (y + x));
         runtime.reset();
         while ((bot.motorLB.isBusy() && bot.motorRB.isBusy() && bot.motorRF.isBusy() && bot.motorLF.isBusy())) {
-            bot.motorRF.setPower(ramp(power) * (y - x));
-            bot.motorLF.setPower(ramp(power) * (-y - x));
-            bot.motorLB.setPower(ramp(power) * (-y + x));
-            bot.motorRB.setPower(ramp(power) * (y + x));
+            bot.motorRF.setPower(power * (y - x));
+            bot.motorLF.setPower(power * (-y - x));
+            bot.motorLB.setPower(power * (-y + x));
+            bot.motorRB.setPower(power * (y + x));
             // Display it for the driver.
             telemetry.addData("Path2", "Running at %7d :%7d",
                     bot.motorLB.getCurrentPosition(),
