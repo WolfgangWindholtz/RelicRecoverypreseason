@@ -18,7 +18,6 @@ public class RedPerpendicular extends Processor {
         bot.init(hardwareMap);
         waitForStart();
         //bot.x = angularOffset();
-        checkVu();
         checkCol();
         grabGlyph();
 
@@ -26,14 +25,14 @@ public class RedPerpendicular extends Processor {
         knockJewel(true);
 
         goAngle(20, 0);
-        sleep(500);
         align(0);
         turn(-90);
         align(-90);
+        goAnglePower(1.3,180,.3);
         raiseColorServo();
-        adjust(10.5);
-        adjust(10.5);
-        adjust(10.5);
+        adjust(.045);
+        adjust(.045);
+        adjust(.045);
 
         align(-90);
         gotoColumnLeft();

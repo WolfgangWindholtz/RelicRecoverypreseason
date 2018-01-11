@@ -17,7 +17,6 @@ public class RedParallel extends Processor{
         bot.init(hardwareMap);
 
         waitForStart();
-        checkVu();
         checkCol();
 
         grabGlyph();
@@ -25,24 +24,19 @@ public class RedParallel extends Processor{
         //knocks the correct jewel off according to our alliance color
         knockJewel(true);
 
-        goAngle(20,0);
-        sleep(500);
+        goAngle(22.5,20);
         align(0);
         turn(-180);
         align(180);
-        sleep(500);
         raiseColorServo();
         align(180);
-        //adjust(33.75);
-        //adjust(33.75);
-        //adjust(33.75);
-        adjust(10.5);
-        adjust(10.5);
-        adjust(10.5);
+
+        adjust(.045);
+        adjust(.045);
+        adjust(.045);
 
         align(180);
-        align(180);
-        align(180);
+
         sleep(500);
         gotoColumnLeft();
 

@@ -24,17 +24,15 @@ public class BluePerpendicular extends Processor{
         knockJewel(false);
 
         goAnglePower(20,180,.4);
-        sleep(500);
         align(0);
-        sleep(500);
         turn(90);
         align(90);
-        goAnglePower(1.2,0,.3);
+        goAnglePower(1.3,0,.3);
         raiseColorServo();
-        adjust(.048);
+        adjust(.045);
         sleep(200);
-        adjust(.048);
-        adjust(.048);
+        adjust(.045);
+        adjust(.045);
         align(90);
         gotoColumnRight();
 

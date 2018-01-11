@@ -198,17 +198,17 @@ public abstract class Processor extends LinearOpMode {
 
     public void knockJewel(boolean isTeamRed) {
         bot.jewelServo.setPosition(.8);
-        sleep(2000);
+        sleep(500);
         int toTurn = checkJewel(isTeamRed, isSensorRed());
         telemetry.addData("blue", bot.colorSensor.blue());
         telemetry.addData("red", bot.colorSensor.red());
         turn(toTurn);
-        sleep(500);
+        sleep(200);
         bot.jewelServo.setPosition(.15);
         sleep(500);
 
         turn(-toTurn);
-        sleep(500);
+        sleep(200);
     }
 
     public int checkJewel(boolean isTeamRed, boolean isSensorRed) {
@@ -245,18 +245,18 @@ public abstract class Processor extends LinearOpMode {
         double initial = bot.ultrasonicLeft.getVoltage();
         if(initial>volts) {
             while (bot.ultrasonicLeft.getVoltage() > volts) {
-                bot.motorRF.setPower(.1);
-                bot.motorLF.setPower(-.1);
-                bot.motorLB.setPower(-.1);
-                bot.motorRB.setPower(.1);
+                bot.motorRF.setPower(.15);
+                bot.motorLF.setPower(-.15);
+                bot.motorLB.setPower(-.15);
+                bot.motorRB.setPower(.15);
             }
         }
         if(initial<volts) {
             while (bot.ultrasonicLeft.getVoltage() < volts) {
-                bot.motorRF.setPower(-.1);
-                bot.motorLF.setPower(.1);
-                bot.motorLB.setPower(.1);
-                bot.motorRB.setPower(-.1);
+                bot.motorRF.setPower(-.15);
+                bot.motorLF.setPower(.15);
+                bot.motorLB.setPower(.15);
+                bot.motorRB.setPower(-.15);
             }
         }
         stopBotMotors();
@@ -266,7 +266,7 @@ public abstract class Processor extends LinearOpMode {
         // the direction approaching the cryptobox changes depending on the side
         enterEnc();
 
-        goAngleColumns(20,178,0.2,getColumnLeft());
+        goAngleColumns(18,180,0.25,getColumnLeft());
         goAngle(2.6,0);
 
         stopBotMotors();
@@ -275,8 +275,8 @@ public abstract class Processor extends LinearOpMode {
     {
         enterEnc();
 
-        goAngleColumns(20,0,0.2,getColumnRight());
-        goAngle(1.2,0);
+        goAngleColumns(18,0,0.25,getColumnRight());
+        goAngle(1,0);
 
         stopBotMotors();
     }
@@ -318,10 +318,10 @@ public abstract class Processor extends LinearOpMode {
                         bot.motorRB.getTargetPosition(),
                         bot.motorRF.getTargetPosition());
                 telemetry.update();
-                if (bot.colorSensor2.getDistance(DistanceUnit.CM) < 60) {
+                if (bot.colorSensor2.getDistance(DistanceUnit.CM) < 70) {
                     count++;
                     if (numOfCol > count) {
-                        while (bot.colorSensor2.getDistance(DistanceUnit.CM) < 60) {
+                        while (bot.colorSensor2.getDistance(DistanceUnit.CM) < 70) {
                             bot.motorRF.setPower(power * (y - x));
                             bot.motorLF.setPower(power * (-y - x));
                             bot.motorLB.setPower(power * (-y + x));
@@ -546,7 +546,7 @@ public abstract class Processor extends LinearOpMode {
         sleep(500);
 
         runtime.reset();
-        while (runtime.milliseconds() <700) {
+        while (runtime.milliseconds() <600) {
             bot.slideMotor.setPower(-.8);
         }
         bot.slideMotor.setPower(0);
@@ -558,7 +558,7 @@ public abstract class Processor extends LinearOpMode {
         stopBotMotors();
 
 
-        goAnglePower(3.3, 90, .3);
+        goAnglePower(9, 90, .3);
         sleep(500);
         //turn(30);
 
@@ -571,7 +571,7 @@ public abstract class Processor extends LinearOpMode {
         sleep(1200);
         runtime.reset();
         //raises the Rev slides to pick the glyph off the ground to prevent dragging the glyph
-        while(runtime.milliseconds()<700) {
+        while(runtime.milliseconds()<600) {
             bot.slideMotor.setPower(.8);
         }
         bot.slideMotor.setPower(0);
