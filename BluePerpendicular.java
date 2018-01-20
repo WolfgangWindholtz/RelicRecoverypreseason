@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Created by Sushr on 12/16/2017.
  */
 @Autonomous(name = "BluePerpendicular", group = "jfjf")
-public class BluePerpendicular extends Processor{
+public class BluePerpendicular extends Processor {
     int count = 0;
     boolean touch = false;
     ElapsedTime time = new ElapsedTime();
@@ -15,10 +15,9 @@ public class BluePerpendicular extends Processor{
     public void runOpMode() throws InterruptedException {
         bot.init(hardwareMap);
         waitForStart();
-        checkVu();
         checkCol();
-
         grabGlyph();
+        align(0);
 
         //knocks the correct jewel off according to our alliance color
         knockJewel(false);
@@ -35,6 +34,7 @@ public class BluePerpendicular extends Processor{
         adjust(.045);
         align(90);
         gotoColumnRight();
+
 
         stopBotMotors();
 

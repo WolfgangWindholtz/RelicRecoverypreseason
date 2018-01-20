@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Created by Sushr on 12/15/2017.
  */
 @Autonomous(name = "BlueParallel", group = "fjfrjkdk")
-public class BlueParallel extends Processor{
+public class BlueParallel extends Processor {
 
     int count = 0;
     boolean touch = false;
@@ -17,16 +17,16 @@ public class BlueParallel extends Processor{
         bot.init(hardwareMap);
 
         waitForStart();
-        checkVu();
         checkCol();
         grabGlyph();
+        align(0);
 
         //knocks the correct jewel off according to our alliance colo
 
         //knocks the correct jewel off according to our alliance color
         knockJewel(false);
 
-        goAnglePower(22.5,160,.4);
+        goAnglePower(24,160,.4);
         align(0);
         turn(180);
         align(180);

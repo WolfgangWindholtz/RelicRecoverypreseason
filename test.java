@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
  */
 @TeleOp(group = "Concept",name = "servotest")
 public class test extends OpMode {
-    telemap bot = new telemap();
+    TeleMap bot = new TeleMap();
 
     @Override
     public void init() {

@@ -1,73 +1,24 @@
 package org.firstinspires.ftc.teamcode;
 
+import android.media.MediaPlayer;
+
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
-import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cColorSensor;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
-import com.qualcomm.hardware.modernrobotics.ModernRoboticsTouchSensor;
-
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-
-import org.firstinspires.ftc.robotcore.external.ClassFactory;
-import org.firstinspires.ftc.robotcore.external.Func;
-import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
-import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-import org.firstinspires.ftc.robotcore.external.navigation.Position;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
-import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
-import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
-import org.firstinspires.ftc.robotcontroller.external.samples.ConceptVuforiaNavigation;
-import org.firstinspires.ftc.robotcore.external.ClassFactory;
-import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
-import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
-import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
-import org.firstinspires.ftc.robotcore.external.navigation.VuMarkInstanceId;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
-import com.qualcomm.robotcore.hardware.UltrasonicSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcontroller.internal.FtcRobotControllerActivity;
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
-import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
-import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
-import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
-import org.firstinspires.ftc.robotcore.external.navigation.VuMarkInstanceId;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 
 /**
@@ -75,12 +26,12 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
  */
 
 public class Map {
-    public BNO055IMU imu;
+    BNO055IMU imu;
     HardwareMap hwMap = null;
     DcMotor motorLF;
     DcMotor motorLB;
-    DcMotor motorRF;
     DcMotor motorRB;
+    DcMotor motorRF;
     DcMotor slideMotor;
 
     Servo glyphServo1;
@@ -89,21 +40,23 @@ public class Map {
     Servo glyphServo4;
     Servo jewelServo;
     Servo colorServo;
-
+    MediaPlayer mediaPlayer;
+    AnalogInput ultrasonicLeft = null;
+    AnalogInput ultrasonicRight = null;
 
     ColorSensor colorSensor = null;
+    ModernRoboticsI2cRangeSensor rangeSensor = null;
+    //AnalogInput maxbotics = null;
+
+    //DigitalChannel touchSensor;
 
     DistanceSensor colorSensor2 = null;
-
-    AnalogInput ultrasonicLeft = null;
-    ModernRoboticsI2cRangeSensor rangeSensor = null;
 
     int cameraMonitorViewId;
     VuforiaTrackables relicTrackables;
     VuforiaTrackable relicTemplate;
 
     RelicRecoveryVuMark columnToScore;
-
     double tX;
     double tY;
     double tZ;
@@ -117,8 +70,8 @@ public class Map {
 
     ElapsedTime runtime = new ElapsedTime();
 
-    public void init(HardwareMap ahwMap) {
 
+    public void init(HardwareMap ahwMap) {
         // save reference to HW Map
         hwMap = ahwMap;
         imu = hwMap.get(BNO055IMU.class, "imu");
@@ -128,13 +81,16 @@ public class Map {
         motorRB = hwMap.dcMotor.get("motorRB");
         slideMotor = hwMap.dcMotor.get("slideMotor");
         //motorLB.setDirection(DcMotor.Direction.REVERSE);
-        //motorRF.setDirection(DcMotor.Direction.REVERSE);
+        //^^^^^^^^^^^^^^^^^^^^^^^^^R^RmotorRF.setDirection(DcMotor.Direction.REVERSE);
         glyphServo1 = hwMap.servo.get("glyphServo1");
         glyphServo2 = hwMap.servo.get("glyphServo2");
         glyphServo3 = hwMap.servo.get("glyphServo3");
         glyphServo4 = hwMap.servo.get("glyphServo4");
         jewelServo = hwMap.servo.get("jewelServo");
         colorServo = hwMap.servo.get("colorServo");
+        mediaPlayer = MediaPlayer.create(hwMap.appContext,R.raw.bigshaq);
+
+
 
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
@@ -147,10 +103,12 @@ public class Map {
         imu.initialize(parameters);
 
         colorSensor = hwMap.get(ColorSensor.class, "colorSensor");
-        colorSensor2 = hwMap.get(DistanceSensor.class,"colorSensor2");
+        colorSensor2 = hwMap.get(DistanceSensor.class, "colorSensor2");
+        rangeSensor = hwMap.get(ModernRoboticsI2cRangeSensor.class, "rangeSensor");
+        ultrasonicLeft = hwMap.get( AnalogInput.class, "ultrasonicLeft");
+        ultrasonicRight = hwMap.get(AnalogInput.class,"ultrasonicRight");
 
-        ultrasonicLeft = hwMap.get(AnalogInput.class,"ultrasonicLeft");
-        rangeSensor = hwMap.get(ModernRoboticsI2cRangeSensor.class,"rangeSensor");
+
 
         cameraMonitorViewId = hwMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hwMap.appContext.getPackageName());
         VuforiaLocalizer.Parameters param = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
@@ -178,7 +136,11 @@ public class Map {
 
         slideMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        jewelServo.setPosition(.15);
+        jewelServo.setPosition(.16);
+
+        colorServo.setPosition(0);
+
+
 
         motorLB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorRB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -189,5 +151,7 @@ public class Map {
         motorRB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorLF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorRF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+
     }
 }

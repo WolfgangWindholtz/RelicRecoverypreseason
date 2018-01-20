@@ -30,9 +30,9 @@ public class RedPerpendicular extends Processor {
         align(-90);
         goAnglePower(1.3,180,.3);
         raiseColorServo();
-        adjust(.045);
-        adjust(.045);
-        adjust(.045);
+        adjust(.037);
+        adjust(.037);
+        adjust(.037);
 
         align(-90);
         gotoColumnLeft();
@@ -45,7 +45,7 @@ public class RedPerpendicular extends Processor {
         sleep(500);
         align(-90);
         //releases the glyph and pushes the glyph into the cryptobox
-        score1(180);
+        score1(-90);
         stopBotMotors();
     }
 }

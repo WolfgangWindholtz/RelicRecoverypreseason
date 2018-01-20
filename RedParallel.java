@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Created by Sushr on 12/15/2017.
  */
 @Autonomous(name = "redParallel", group = "fjfrjkdk")
-public class RedParallel extends Processor{
+public class RedParallel extends Processor {
 
     int count = 0;
     boolean touch = false;
@@ -31,9 +31,9 @@ public class RedParallel extends Processor{
         raiseColorServo();
         align(180);
 
-        adjust(.045);
-        adjust(.045);
-        adjust(.045);
+        adjust(.036);
+        adjust(.036);
+        adjust(.036);
 
         align(180);
 
