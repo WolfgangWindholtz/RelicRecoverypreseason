@@ -526,9 +526,6 @@ public abstract class Processor extends LinearOpMode {
 
 
     public void score1(int x) {
-        bot.glyphServo1.setPosition(0.36);
-        bot.glyphServo2.setPosition(0.64);
-        sleep(500);
 
         runtime.reset();
         while (runtime.milliseconds() <450) {
@@ -538,8 +535,8 @@ public abstract class Processor extends LinearOpMode {
 
 
         align(x);
-        bot.glyphServo3.setPosition(.36);
-        bot.glyphServo4.setPosition(0.42);
+        bot.glyphServo3.setPosition(.44);
+        bot.glyphServo4.setPosition(0.36);
         stopBotMotors();
 
 
@@ -547,12 +544,12 @@ public abstract class Processor extends LinearOpMode {
         sleep(500);
         //turn(30);
 
-        goAnglePower(7, -90, .6);
+        goAnglePower(7.5, -90, .6);
     }
 
     public void grabGlyph() {
-        bot.glyphServo3.setPosition(0.20);
-        bot.glyphServo4.setPosition(.59);
+        bot.glyphServo3.setPosition(0.27);
+        bot.glyphServo4.setPosition(.53);
         sleep(1200);
         runtime.reset();
         //raises the Rev slides to pick the glyph off the ground to prevent dragging the glyph
@@ -560,8 +557,8 @@ public abstract class Processor extends LinearOpMode {
             bot.slideMotor.setPower(.8);
         }
         bot.slideMotor.setPower(0);
-        bot.glyphServo1.setPosition(0.55);
-        bot.glyphServo2.setPosition(0.45);
+        bot.glyphServo1.setPosition(0.8);
+        bot.glyphServo2.setPosition(0.52);
         sleep(700);
     }
 

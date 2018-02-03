@@ -136,7 +136,7 @@ public class Map {
 
         slideMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        jewelServo.setPosition(.16);
+        jewelServo.setPosition(.165);
 
         colorServo.setPosition(0);
 

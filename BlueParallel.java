@@ -8,10 +8,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  */
 @Autonomous(name = "BlueParallel", group = "fjfrjkdk")
 public class BlueParallel extends Processor {
-
-    int count = 0;
-    boolean touch = false;
-    ElapsedTime time = new ElapsedTime();
     @Override
     public void runOpMode() throws InterruptedException {
         bot.init(hardwareMap);
@@ -26,15 +22,16 @@ public class BlueParallel extends Processor {
         //knocks the correct jewel off according to our alliance color
         knockJewel(false);
 
-        goAnglePower(24,160,.4);
+        goAnglePower(20,160,.8);
+        goAnglePower(3,180,.5);
         align(0);
         turn(180);
         align(180);
         raiseColorServo();
-        adjust(.048);
+        adjust(.047);
         sleep(200);
-        adjust(.048);
-        adjust(.048);
+        adjust(.047);
+        adjust(.047);
         align(180);
 
 

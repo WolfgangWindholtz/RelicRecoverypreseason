@@ -42,7 +42,6 @@ public class Tele extends OpMode {
 
     @Override
     public void loop() {
-        sekrit_code();
 
         //takes the joystick values and converts to motor speeds through holonomic calculations
         readGamePad();
@@ -101,13 +100,14 @@ public class Tele extends OpMode {
 
         if (gamepad2.x)  //opens the right servo
         {
-            openArms();
+            openBotWide();
         }
         if (gamepad2.b) {
             releaseGlyphBot();
+            releaseGlyphTop();
         }
         if (gamepad2.a) {
-            releaseGlyphTop();
+            openTopWide();
         }
 
 
@@ -123,7 +123,6 @@ public class Tele extends OpMode {
         if (gamepad2.dpad_down) {
             wristDown(); // bring wrist down for relic
         }
-
 
     }
 
@@ -153,90 +152,34 @@ public class Tele extends OpMode {
     }
 
     public void gripGlyphTop(){
-        bot.glyphServo3.setPosition(0.20);
-        bot.glyphServo4.setPosition(.59);
+        bot.glyphServo3.setPosition(0.27);
+        bot.glyphServo4.setPosition(.53);
     }
     public void gripGlyphBot(){
-        bot.glyphServo1.setPosition(0.55);
-        bot.glyphServo2.setPosition(0.45);
+        bot.glyphServo1.setPosition(0.8);
+        bot.glyphServo2.setPosition(0.52);
     }
 
     public void ram() {
-        bot.glyphServo1.setPosition(.15);
-        bot.glyphServo2.setPosition(.85);
+        bot.glyphServo1.setPosition(.48);
+        bot.glyphServo2.setPosition(.83);
         bot.glyphServo3.setPosition(.87);
         bot.glyphServo4.setPosition(.12);
     }
-    public void openArms(){
-        bot.glyphServo1.setPosition(0.28);
-        bot.glyphServo2.setPosition(0.72);
+    public void openBotWide(){
+        bot.glyphServo1.setPosition(0.64);
+        bot.glyphServo2.setPosition(0.68);
+    }
+    public void openTopWide(){
         bot.glyphServo3.setPosition(.44);
-        bot.glyphServo4.setPosition(0.34);
+        bot.glyphServo4.setPosition(0.36);
     }
     public void releaseGlyphBot(){
-        bot.glyphServo1.setPosition(0.4);
+        bot.glyphServo1.setPosition(0.72);
         bot.glyphServo2.setPosition(0.6);
     }
-    public void releaseGlyphTop(){
-        bot.glyphServo3.setPosition(.32);
-        bot.glyphServo4.setPosition(0.46);
-    }
-
-    public void sekrit_code() {
-        if(count==0) {
-            if (gamepad1.dpad_up) {
-                count++;
-            }
-        }
-        if (count == 1) {
-            if (gamepad1.dpad_up) {
-                count++;
-            }
-        }
-        if (count == 2) {
-            if (gamepad1.dpad_down) {
-                count++;
-            }
-        }
-        if (count == 3) {
-            if (gamepad1.dpad_down) {
-                count++;
-            }
-        }
-        if (count == 4) {
-            if (gamepad1.dpad_left) {
-                count++;
-            }
-        }
-        if (count == 5) {
-            if (gamepad1.dpad_right) {
-                count++;
-            }
-        }
-        if (count == 6) {
-            if (gamepad1.dpad_left) {
-                count++;
-            }
-        }
-        if (count == 7) {
-            if (gamepad1.dpad_right) {
-                count++;
-            }
-        }
-        if (count == 8) {
-            if (gamepad1.b) {
-                count++;
-            }
-        }
-        if(count==9){
-            if (gamepad1.a) {
-                count++;
-            }
-        }
-        if(count==10){
-            if(gamepad1.start){
-                bot.mediaPlayer.stop();
-            }
-        }
+    public void releaseGlyphTop() {
+        bot.glyphServo3.setPosition(.37);
+        bot.glyphServo4.setPosition(0.45);
     }
 }
