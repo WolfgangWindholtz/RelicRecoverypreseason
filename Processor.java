@@ -26,7 +26,7 @@ public abstract class Processor extends LinearOpMode {
     public final static int TICKSPERROTATION = 1120;
     static final double P_TURN_COEFF = .07;
     public final static int DIAMETEROFWHEEL = 4;
-    static final double TURN_SPEED = 0.3;
+    static final double TURN_SPEED = 0.7;
     static final double DRIVE_SPEED = 0.6;
     static final double HEADING_THRESHOLD = 2;
     static final double OMNI_WHEEL_CIRCUMFERENCE = 4 * Math.PI;
@@ -526,7 +526,9 @@ public abstract class Processor extends LinearOpMode {
 
 
     public void score1(int x) {
-
+        bot.glyphServo1.setPosition(0.64);
+        bot.glyphServo2.setPosition(0.68);
+        sleep(500);
         runtime.reset();
         while (runtime.milliseconds() <450) {
             bot.slideMotor.setPower(-.8);
@@ -545,6 +547,7 @@ public abstract class Processor extends LinearOpMode {
         //turn(30);
 
         goAnglePower(7.5, -90, .6);
+        turn(180);
     }
 
     public void grabGlyph() {

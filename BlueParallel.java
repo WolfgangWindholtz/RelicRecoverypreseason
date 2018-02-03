@@ -22,8 +22,7 @@ public class BlueParallel extends Processor {
         //knocks the correct jewel off according to our alliance color
         knockJewel(false);
 
-        goAnglePower(20,160,.8);
-        goAnglePower(3,180,.5);
+        goAnglePower(24,160,.8);
         align(0);
         turn(180);
         align(180);

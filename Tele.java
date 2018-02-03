@@ -136,7 +136,7 @@ public class Tele extends OpMode {
     }
 
     public void fingersOpen() {
-        bot.relicFingers.setPosition(0);
+        bot.relicFingers.setPosition(.05);
     }
 
     public void fingersClose() {
@@ -148,7 +148,7 @@ public class Tele extends OpMode {
     }
 
     public void wristDown() {
-        bot.relicWrist.setPosition(1);
+        bot.relicWrist.setPosition(.95);
     }
 
     public void gripGlyphTop(){
@@ -156,8 +156,8 @@ public class Tele extends OpMode {
         bot.glyphServo4.setPosition(.53);
     }
     public void gripGlyphBot(){
-        bot.glyphServo1.setPosition(0.8);
-        bot.glyphServo2.setPosition(0.52);
+        bot.glyphServo1.setPosition(0.77);
+        bot.glyphServo2.setPosition(0.49);
     }
 
     public void ram() {

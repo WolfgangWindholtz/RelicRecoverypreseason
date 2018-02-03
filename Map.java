@@ -26,25 +26,25 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
  */
 
 public class Map {
-    BNO055IMU imu;
+    public BNO055IMU imu;
     HardwareMap hwMap = null;
-    DcMotor motorLF;
-    DcMotor motorLB;
-    DcMotor motorRB;
-    DcMotor motorRF;
-    DcMotor slideMotor;
+    public DcMotor motorLF;
+    public DcMotor motorLB;
+    public DcMotor motorRB;
+    public DcMotor motorRF;
+    public DcMotor slideMotor;
 
-    Servo glyphServo1;
-    Servo glyphServo2;
-    Servo glyphServo3;
-    Servo glyphServo4;
-    Servo jewelServo;
-    Servo colorServo;
+    public Servo glyphServo1;
+    public Servo glyphServo2;
+    public Servo glyphServo3;
+    public Servo glyphServo4;
+    public Servo jewelServo;
+    public Servo colorServo;
     MediaPlayer mediaPlayer;
-    AnalogInput ultrasonicLeft = null;
-    AnalogInput ultrasonicRight = null;
+    public AnalogInput ultrasonicLeft = null;
+    public AnalogInput ultrasonicRight = null;
 
-    ColorSensor colorSensor = null;
+    public ColorSensor colorSensor = null;
     ModernRoboticsI2cRangeSensor rangeSensor = null;
     //AnalogInput maxbotics = null;
 
